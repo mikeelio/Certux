@@ -1,0 +1,8 @@
+
+cogs/mcbf/icon.jpg
+*.ini
+*.pyc
+*.pyc
+mcbf.ini
+test.py
+cogs/__pycache__/minecraft_rcon.cpython-310.pyc
