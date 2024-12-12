@@ -41,9 +41,6 @@ class minecraft_ign(commands.Cog):
         def db_checker():
             #Check if the user already has a minecraft account assignd to their discord ign
 
-        def db_command(sql):
-            cursor.execute(sql)
-
         def ign_uuid(ign):
             url = f'https://api.mojang.com/users/profiles/minecraft/{ign}?'
             response = requests.get(url)
@@ -68,15 +65,15 @@ class minecraft_ign(commands.Cog):
             response = mcr.command(f"msg {ign} Here is your code: {code}")
     
             if response == "No player was found":
-                await ctx.send(f"{ctx.author.mention} You have to be logged into the minecraft server to get your code")
+                ctx.send(f"{ctx.author.mention} You have to be logged into the minecraft server to get your code")
             else:
-                await ctx.send(f"Check minecraft chat for your confirmation code and reply here!!!")
-                confirm = await self.client.wait_for("message")
+                ctx.send(f"Check minecraft chat for your confirmation code and reply here!!!")
+                confirm = self.client.wait_for("message")
     
                 tries= 3
                 while str(confirm.content) != str(code):
-                    await ctx.send(f"Code does not match, try again!!")
-                    confirm = await self.client.wait_for("message")
+                    ctx.send(f"Code does not match, try again!!")
+                    confirm = self.client.wait_for("message")
                     tries -=1
                     if tries == 0:
                         break
@@ -87,7 +84,7 @@ class minecraft_ign(commands.Cog):
         else:
             confirm_code(ctx, server_request)    
             if str(confirm.content) == str(code):
-                if security == 1:
+                if security == 1: # type: ignore
                     if request == "add":
                         uuid = ign_uuid(ign)
                         command = f"INSERT INTO Staff (discord_ign, discord_id, minecraft_ign, minecraft_uuid) VALUES ('{ctx.author}', '{ctx.author.id}', '{ign}', '{uuid}')"
