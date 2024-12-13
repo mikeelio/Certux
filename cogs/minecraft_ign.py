@@ -39,6 +39,7 @@ class minecraft_ign(commands.Cog):
                 return rcon_ip, rcon_pass, rcon_port, 1
 
         def db_checker():
+            print("")
             #Check if the user already has a minecraft account assignd to their discord ign
 
         def ign_uuid(ign):
@@ -83,12 +84,12 @@ class minecraft_ign(commands.Cog):
             await ctx.send(f"{ctx.author.mention} Please use the command again and include your Minecraft IGN")
         else:
             confirm_code(ctx, server_request)    
-            if str(confirm.content) == str(code):
+            if str(confirm.content) == str(code): # type: ignore
                 if security == 1: # type: ignore
                     if request == "add":
                         uuid = ign_uuid(ign)
                         command = f"INSERT INTO Staff (discord_ign, discord_id, minecraft_ign, minecraft_uuid) VALUES ('{ctx.author}', '{ctx.author.id}', '{ign}', '{uuid}')"
-                        db_command(command)
+                        db_command(command) # type: ignore
     
                         await ctx.send(f"You have registered {ign} to your discord account!!")
                     elif request == "remove":
